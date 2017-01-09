@@ -1,5 +1,9 @@
 package com.brianroper.androidweekly.presenters;
 
+import android.content.Context;
+import android.content.Intent;
+
+import com.brianroper.androidweekly.services.ArchiveService;
 import com.brianroper.androidweekly.views.ArticleView;
 
 /**
@@ -9,6 +13,11 @@ import com.brianroper.androidweekly.views.ArticleView;
 public class ArticlePresenter implements Presenter<ArticleView> {
 
     private ArticleView mArticleView;
+    private Context mContext;
+
+    public ArticlePresenter(Context context) {
+        mContext = context;
+    }
 
     @Override
     public void onCreate() {
@@ -51,5 +60,10 @@ public class ArticlePresenter implements Presenter<ArticleView> {
 
     public void setRecyclerAdapter(){
 
+    }
+
+    public void startArticleService(){
+        Intent articleService = new Intent(mContext, ArchiveService.class);
+        mContext.startService(articleService);
     }
 }

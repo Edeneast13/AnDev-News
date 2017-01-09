@@ -5,5 +5,5 @@ package com.brianroper.androidweekly.model;
  */
 
 public class Constants {
-    public String ARCHIVE_BASE_URL = "view-source:http://androidweekly.net/archive";
+    public String ARCHIVE_BASE_URL = "http://androidweekly.net/archive";
 }
