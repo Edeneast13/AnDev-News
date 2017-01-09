@@ -1,6 +1,5 @@
 package com.brianroper.androidweekly.views;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.presenters.ArticlePresenter;
-import com.brianroper.androidweekly.services.ArchiveService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +46,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleView {
     public void initializePresenter(){
         mArticlePresenter = new ArticlePresenter(getApplicationContext());
         mArticlePresenter.attachView(this);
-        mArticlePresenter.startArticleService();
+        mArticlePresenter.startArchiveService();
     }
 }

@@ -62,8 +62,11 @@ public class ArticlePresenter implements Presenter<ArticleView> {
 
     }
 
-    public void startArticleService(){
-        Intent articleService = new Intent(mContext, ArchiveService.class);
-        mContext.startService(articleService);
+    /**
+     * starts the ArchiveService
+     */
+    public void startArchiveService(){
+        Intent archiveService = new Intent(mContext, ArchiveService.class);
+        mContext.startService(archiveService);
     }
 }

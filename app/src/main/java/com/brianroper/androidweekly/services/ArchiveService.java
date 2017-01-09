@@ -43,23 +43,33 @@ public class ArchiveService extends Service {
         return null;
     }
 
+    /**
+     * retrieves archive issues list from androidweekly.net
+     */
     public void getArticleData(){
-        Constants constants = new Constants();
-        try{
-            Document document = Jsoup.connect(constants.ARCHIVE_BASE_URL).get();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try{
+                    Constants constants = new Constants();
 
-            String title = document.title();
-            Elements elements = document.select("a[href]");
+                    Document document = Jsoup.connect(constants.ARCHIVE_BASE_URL).get();
 
-            Log.i("Title: ", title);
+                    String title = document.title();
+                    Elements elements = document.select("a[href]");
 
-            for (Element element : elements){
-                Log.i("Link: ", element.attr("href"));
-                Log.i("Text: ", element.text());
+                    Log.i("Title: ", title);
+
+                    for (Element element : elements){
+                        Log.i("Link: ", element.attr("href"));
+                        Log.i("Text: ", element.text());
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
             }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        };
+        thread.start();
     }
 }
