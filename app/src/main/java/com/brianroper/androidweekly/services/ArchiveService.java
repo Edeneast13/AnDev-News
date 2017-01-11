@@ -1,6 +1,7 @@
 package com.brianroper.androidweekly.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -17,6 +18,10 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
  * Created by brianroper on 1/9/17.
@@ -87,14 +92,14 @@ public class ArchiveService extends Service {
                 archiveUrls.push(archiveUrl);
             }
             if(element.text().startsWith("Issue")){
-                String archiveTitle = elements.text();
+                String archiveTitle = element.text();
                 archiveTitles.push(archiveTitle);
             }
         }
 
         for(Element date: dates){
             if(date.text().startsWith("20")){
-                String archiveDate = dates.text();
+                String archiveDate = date.text();
                 archiveDates.push(archiveDate);
             }
         }
@@ -103,13 +108,13 @@ public class ArchiveService extends Service {
         Log.i("Title Size: ", archiveTitles.size() + "");
         Log.i("Dates Size: ", archiveDates.size() + "");
 
-        formatArticleData(archiveTitles, archiveUrls, archiveDates);
+        formatArchiveData(archiveTitles, archiveUrls, archiveDates);
     }
 
     /**
      * puts archive data into archive objects
      */
-    public void formatArticleData(Stack<String> titles,
+    public void formatArchiveData(Stack<String> titles,
                                   Stack<String> urls,
                                   Stack<String> dates){
 
@@ -125,5 +130,43 @@ public class ArchiveService extends Service {
         }
 
         Log.i("Archive Size: ", archives.size() + "");
+
+        for (int i = 0; i < archives.size(); i++) {
+            int id = i+1;
+            archives.get(i).setId(id);
+        }
+
+        storeArchiveInRealm(archives);
+    }
+
+    /**
+     * stores the archive data in realm
+     */
+    public void storeArchiveInRealm(final ArrayList<Archive> archives){
+        Realm realm;
+        Realm.init(getApplicationContext());
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfiguration);
+
+        try {
+
+            for (int i = 0; i < archives.size(); i++) {
+                final Archive archive = archives.get(i);
+
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Archive managedArchive = realm.createObject(Archive.class, archive.getId());
+                        managedArchive.setTitle(archive.getTitle());
+                        managedArchive.setDate(archive.getDate());
+                        managedArchive.setUrl(archive.getDate());
+                    }
+                });
+            }
+        }catch (RealmPrimaryKeyConstraintException e){
+            e.printStackTrace();
+        }
     }
 }

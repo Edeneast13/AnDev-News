@@ -1,13 +1,22 @@
 package com.brianroper.androidweekly.model;
 
+import android.support.annotation.NonNull;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by brianroper on 1/9/17.
  */
 
-public class Archive {
+public class Archive extends RealmObject {
+    @PrimaryKey
     private int id;
+    @NonNull
     private String title;
+    @NonNull
     private String url;
+    @NonNull
     private String date;
 
     public int getId() {

@@ -4,18 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.brianroper.androidweekly.services.ArchiveService;
-import com.brianroper.androidweekly.views.ArticleView;
+import com.brianroper.androidweekly.views.ArchiveView;
 
 /**
  * Created by brianroper on 1/9/17.
  */
 
-public class ArticlePresenter implements Presenter<ArticleView> {
+public class ArchivePresenter implements Presenter<ArchiveView> {
 
-    private ArticleView mArticleView;
+    private ArchiveView mArchiveView;
     private Context mContext;
 
-    public ArticlePresenter(Context context) {
+    public ArchivePresenter(Context context) {
         mContext = context;
     }
 
@@ -40,15 +40,8 @@ public class ArticlePresenter implements Presenter<ArticleView> {
     }
 
     @Override
-    public void attachView(ArticleView view) {
-        this.mArticleView = view;
-    }
-
-    /**
-     * retrieves article data from realm database
-     */
-    public void getArticlesFromRealm(){
-
+    public void attachView(ArchiveView view) {
+        this.mArchiveView = view;
     }
 
     /**

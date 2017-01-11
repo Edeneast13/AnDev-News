@@ -6,19 +6,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.brianroper.androidweekly.R;
-import com.brianroper.androidweekly.presenters.ArticlePresenter;
+import com.brianroper.androidweekly.presenters.ArchivePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ArticleActivity extends AppCompatActivity implements ArticleView {
+public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
 
     @BindView(R.id.article_toolbar)
     public Toolbar mToolbar;
     @BindView(R.id.article_recycler)
     public RecyclerView mRecyclerView;
 
-    private ArticlePresenter mArticlePresenter;
+    private ArchivePresenter mArchivePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +44,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleView {
      * initializes the presenter for this activity and attaches it to the view
      */
     public void initializePresenter(){
-        mArticlePresenter = new ArticlePresenter(getApplicationContext());
-        mArticlePresenter.attachView(this);
-        mArticlePresenter.startArchiveService();
+        mArchivePresenter = new ArchivePresenter(getApplicationContext());
+        mArchivePresenter.attachView(this);
+        mArchivePresenter.startArchiveService();
     }
 }
