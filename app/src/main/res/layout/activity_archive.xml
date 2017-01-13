@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.brianroper.androidweekly.views.ArticleActivity">
+    tools:context="com.brianroper.androidweekly.views.ArchiveActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/article_toolbar"
+        android:id="@+id/archive_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
@@ -17,12 +17,12 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/article_recycler"
+        android:id="@+id/archive_recycler"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/article_toolbar">
+        android:layout_below="@+id/archive_toolbar">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

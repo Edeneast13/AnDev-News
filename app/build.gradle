@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'android-apt'
 apply plugin: 'realm-android'
 
 android {
@@ -32,8 +32,8 @@ dependencies {
     compile 'com.android.support:support-v13:25.1.0'
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxandroid:1.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }
