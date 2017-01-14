@@ -40,6 +40,7 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
     /**
      * handles toolbar behavior
      */
+    @Override
     public void handleToolbarBehavior(Toolbar toolbar){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Android Weekly");
@@ -48,15 +49,17 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
     /**
      * initializes the presenter for this activity and attaches it to the view
      */
+    @Override
     public void initializePresenter(){
         mArchivePresenter = new ArchivePresenter(getApplicationContext());
         mArchivePresenter.attachView(this);
-       // mArchivePresenter.startArchiveService();
+        mArchivePresenter.startArchiveService();
     }
 
     /**
      * initializes the views adapter
      */
+    @Override
     public void initializeAdapter(){
         mArchiveAdapter = new ArchiveAdapter(getApplicationContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -66,6 +69,7 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
     /**
      * update data in the adapter
      */
+    @Override
     public void handleAdapterDataSet(){
         mArchiveAdapter.getArchiveDataFromRealm();
         mArchiveAdapter.notifyDataSetChanged();

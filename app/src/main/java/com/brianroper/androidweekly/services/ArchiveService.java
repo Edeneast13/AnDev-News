@@ -161,12 +161,12 @@ public class ArchiveService extends Service {
                         Archive managedArchive = realm.createObject(Archive.class, archive.getId());
                         managedArchive.setTitle(archive.getTitle());
                         managedArchive.setDate(archive.getDate());
-                        managedArchive.setUrl(archive.getDate());
+                        managedArchive.setUrl(archive.getUrl());
                     }
                 });
             }
         }catch (RealmPrimaryKeyConstraintException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

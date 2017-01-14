@@ -4,19 +4,19 @@ package com.brianroper.androidweekly.model;
  * Created by brianroper on 1/9/17.
  */
 
-public class Article {
-    private String title;
+public class Volume {
+    private String headline;
     private String source;
     private String summary;
     private String issue;
     private int id;
 
     public String getTitle() {
-        return title;
+        return headline;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String headline) {
+        this.headline = headline;
     }
 
     public String getSource() {

@@ -5,4 +5,8 @@
     <color name="colorSecondary">#2F2F2F</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorPrimaryLight">#6BC4E5</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="baseBackground">#f5f5f5</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
 </resources>

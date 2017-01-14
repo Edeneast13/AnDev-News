@@ -45,17 +45,6 @@ public class ArchivePresenter implements Presenter<ArchiveView> {
     }
 
     /**
-     * handles article recycler on click listener behaviour
-     */
-    public void articleClickListener(){
-
-    }
-
-    public void setRecyclerAdapter(){
-
-    }
-
-    /**
      * starts the ArchiveService
      */
     public void startArchiveService(){
