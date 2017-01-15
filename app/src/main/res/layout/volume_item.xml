@@ -39,7 +39,7 @@
         android:text="(medium.com)"
         android:textSize="16sp"
         android:textColor="@color/secondaryText"
-        android:layout_toRightOf="@+id/volume_headline"
-        android:paddingTop="16dp"/>
+        android:paddingTop="16dp"
+        android:layout_alignBottom="@+id/volume_summary"/>
 
 </RelativeLayout>

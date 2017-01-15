@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.brianroper.androidweekly.R;
-import com.brianroper.androidweekly.model.Archive;
 import com.brianroper.androidweekly.model.Volume;
 
 import butterknife.BindView;

@@ -162,19 +162,25 @@ public class VolumeService extends Service {
                 .build();
         realm = Realm.getInstance(realmConfiguration);
 
-        for (int i = 0; i < volumes.size(); i++) {
-            final Volume volume = volumes.get(i);
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Volume managedVolume = realm.createObject(Volume.class, volume.getId());
-                    managedVolume.setIssue(volume.getIssue());
-                    managedVolume.setLink(volume.getLink());
-                    managedVolume.setSummary(volume.getSummary());
-                    managedVolume.setHeadline(volume.getHeadline());
-                    managedVolume.setSource(volume.getSource());
-                }
-            });
+        try {
+
+            for (int i = 0; i < volumes.size(); i++) {
+                final Volume volume = volumes.get(i);
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Volume managedVolume = realm.createObject(Volume.class, volume.getId());
+                        managedVolume.setIssue(volume.getIssue());
+                        managedVolume.setLink(volume.getLink());
+                        managedVolume.setSummary(volume.getSummary());
+                        managedVolume.setHeadline(volume.getHeadline());
+                        managedVolume.setSource(volume.getSource());
+                    }
+                });
+            }
+        }
+        catch (RealmPrimaryKeyConstraintException e){
+
         }
     }
 }

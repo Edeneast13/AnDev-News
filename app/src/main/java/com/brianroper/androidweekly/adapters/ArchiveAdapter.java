@@ -86,6 +86,9 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
         mRealmResults = realm.where(Archive.class).findAll();
     }
 
+    /**
+     * handles click behavior for recycler view item
+     */
     public void setArchiveListener(ArchiveViewHolder holder){
         Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
         volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

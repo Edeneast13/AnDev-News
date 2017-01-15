@@ -3,10 +3,12 @@ package com.brianroper.androidweekly.views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.brianroper.androidweekly.R;
+import com.brianroper.androidweekly.adapters.VolumeAdapter;
 import com.brianroper.androidweekly.presenters.VolumePresenter;
 
 import butterknife.BindView;
@@ -16,8 +18,11 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
 
     @BindView(R.id.volume_toolbar)
     public Toolbar mToolbar;
+    @BindView(R.id.volume_recycler)
+    public RecyclerView mRecyclerView;
 
     private VolumePresenter mVolumePresenter;
+    private VolumeAdapter mVolumeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +32,10 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
         ButterKnife.bind(this);
 
         initializePresenter();
+        initializeAdapter();
 
         handleToolbarBehavior(mToolbar);
+        handleAdapterDataSet();
     }
 
     /**
@@ -50,9 +57,29 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
         mVolumePresenter.startVolumeService(getVolumeId());
     }
 
+    /**
+     * gets the current volume id from the received intent
+     */
     public int getVolumeId(){
         Intent archiveIntent = getIntent();
         int id = archiveIntent.getIntExtra("id", 0);
         return id;
+    }
+
+    /**
+     * initializes the activities adapter
+     */
+    public void initializeAdapter(){
+        mVolumeAdapter = new VolumeAdapter(getApplicationContext());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setAdapter(mVolumeAdapter);
+    }
+
+    /**
+     * handles the data set of the attached adapter
+     */
+    public void handleAdapterDataSet(){
+        mVolumeAdapter.getVolumeDataFromRealm();
+        mVolumeAdapter.notifyDataSetChanged();
     }
 }
