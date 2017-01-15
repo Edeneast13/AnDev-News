@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.brianroper.androidweekly.model.Archive;
 import com.brianroper.androidweekly.model.Constants;
+import com.brianroper.androidweekly.model.Volume;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,11 +16,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
  * Created by brianroper on 1/12/17.
@@ -52,6 +55,9 @@ public class VolumeService extends Service {
         return null;
     }
 
+    /**
+     * retrieves volume data required for network call from realm
+     */
     public void getVolumeDataFromRealm(){
         Thread thread = new Thread(){
             @Override
@@ -71,6 +77,9 @@ public class VolumeService extends Service {
         thread.start();
     }
 
+    /**
+     * retrieves volume data from androidweekly.net
+     */
     public void getVolumeData(final Archive volumeArchive){
         try{
             Constants constants = new Constants();
@@ -92,6 +101,9 @@ public class VolumeService extends Service {
         }
     }
 
+    /**
+     * organizes volume data into manageable stacks
+     */
     public void cleanVolumeData(Elements body, Elements source, Elements headline){
         Stack<String> volumeBody = new Stack<>();
         Stack<String> volumeSource = new Stack<>();
@@ -116,6 +128,53 @@ public class VolumeService extends Service {
         Log.i("LinkSize: ", volumeHeadlineLink.size() + "");
         Log.i("HeadlineSize: ", volumeHeadline.size() + "");
 
-        
+        formatVolumeData(volumeBody, volumeSource, volumeHeadlineLink, volumeHeadline);
+    }
+
+    /**
+     * formats volume data into Issue object
+     */
+    public void formatVolumeData(Stack<String> body,
+                                 Stack<String> source,
+                                 Stack<String> link,
+                                 Stack<String> headline){
+
+        ArrayList<Volume> volumeList = new ArrayList<>();
+
+        for (int i = 0; i < source.size(); i++) {
+            Volume volume = new Volume();
+            volume.setHeadline(headline.pop());
+            volume.setSource(source.pop());
+            volume.setSummary(body.pop());
+            volume.setLink(link.pop());
+            volume.setIssue(mVolumeId);
+            volume.setId(i);
+            volumeList.add(volume);
+        }
+        storeVolumeDataInRealm(volumeList);
+    }
+
+    public void storeVolumeDataInRealm(ArrayList<Volume> volumes){
+        Realm realm;
+        Realm.init(getApplicationContext());
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfiguration);
+
+        for (int i = 0; i < volumes.size(); i++) {
+            final Volume volume = volumes.get(i);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Volume managedVolume = realm.createObject(Volume.class, volume.getId());
+                    managedVolume.setIssue(volume.getIssue());
+                    managedVolume.setLink(volume.getLink());
+                    managedVolume.setSummary(volume.getSummary());
+                    managedVolume.setHeadline(volume.getHeadline());
+                    managedVolume.setSource(volume.getSource());
+                }
+            });
+        }
     }
 }

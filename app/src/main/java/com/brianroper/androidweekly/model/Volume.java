@@ -1,21 +1,26 @@
 package com.brianroper.androidweekly.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by brianroper on 1/9/17.
  */
 
-public class Volume {
+public class Volume extends RealmObject{
     private String headline;
     private String source;
     private String summary;
-    private String issue;
+    private int issue;
+    private String link;
+    @PrimaryKey
     private int id;
 
-    public String getTitle() {
+    public String getHeadline() {
         return headline;
     }
 
-    public void setTitle(String headline) {
+    public void setHeadline(String headline) {
         this.headline = headline;
     }
 
@@ -35,12 +40,20 @@ public class Volume {
         this.summary = summary;
     }
 
-    public String getIssue() {
+    public int getIssue() {
         return issue;
     }
 
-    public void setIssue(String issue) {
+    public void setIssue(int issue) {
         this.issue = issue;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public int getId() {
