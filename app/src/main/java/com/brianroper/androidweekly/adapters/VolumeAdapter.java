@@ -1,6 +1,7 @@
 package com.brianroper.androidweekly.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.model.Volume;
+import com.brianroper.androidweekly.services.VolumeService;
 import com.thefinestartist.finestwebview.FinestWebView;
 
 import butterknife.BindView;
@@ -85,6 +87,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         realm = Realm.getInstance(realmConfiguration);
        //mRealmResults = realm.where(Volume.class).findAll();
         mRealmResults = realm.where(Volume.class).equalTo("issue", issue).findAll();
+        Log.i("RealmResult Size: ", mRealmResults.size() + "");
     }
 
     /**

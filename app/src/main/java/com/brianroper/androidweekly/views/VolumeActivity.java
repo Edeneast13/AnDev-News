@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.adapters.VolumeAdapter;
@@ -70,7 +71,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
      */
     public int getVolumeId(){
         Intent archiveIntent = getIntent();
-        int id = archiveIntent.getIntExtra("id", 0);
+        int id = archiveIntent.getIntExtra("id", 0)-1;
         return id;
     }
 
@@ -92,7 +93,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     }
 
     /**
-     * watches for ArchiveEvent message data change throughout app
+     * watches for VolumeEvent message data change throughout app
      */
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onVolumeMessageEvent(VolumeEvent volumeEvent){

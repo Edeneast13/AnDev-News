@@ -39,7 +39,6 @@ public class VolumeService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        getVolumeDataFromRealm();
     }
 
     @Override
@@ -50,6 +49,7 @@ public class VolumeService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mVolumeId = intent.getExtras().getInt("id" ,0);
+        getVolumeDataFromRealm();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -151,8 +151,9 @@ public class VolumeService extends Service {
                                  Stack<String> headline){
 
         ArrayList<Volume> volumeList = new ArrayList<>();
+        int sourceSize = source.size();
 
-        for (int i = 0; i < source.size(); i++) {
+        for (int i = 0; i < sourceSize; i++) {
             Volume volume = new Volume();
             volume.setHeadline(headline.pop());
             volume.setSource(source.pop());
@@ -162,9 +163,13 @@ public class VolumeService extends Service {
             volume.setId(i);
             volumeList.add(volume);
         }
+        Log.i("VolumeList: ", volumeList.size() + "");
         storeVolumeDataInRealm(volumeList);
     }
 
+    /**
+     * stores volume data in realm
+     */
     public void storeVolumeDataInRealm(ArrayList<Volume> volumes){
         Realm realm;
         Realm.init(getApplicationContext());
@@ -179,7 +184,8 @@ public class VolumeService extends Service {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Volume managedVolume = realm.createObject(Volume.class, volume.getId());
+                        String volumeId = volume.getIssue() + "000" + volume.getId();
+                        Volume managedVolume = realm.createObject(Volume.class, Integer.parseInt(volumeId));
                         managedVolume.setIssue(volume.getIssue());
                         managedVolume.setLink(volume.getLink());
                         managedVolume.setSummary(volume.getSummary());
@@ -193,7 +199,7 @@ public class VolumeService extends Service {
             mEventBus.postSticky(new VolumeEvent(constants.VOLUME_EVENT_FINISHED));
         }
         catch (RealmPrimaryKeyConstraintException e){
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }
