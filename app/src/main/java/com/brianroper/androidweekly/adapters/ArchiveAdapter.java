@@ -3,6 +3,7 @@ package com.brianroper.androidweekly.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,7 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
         Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
         volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         volumeIntent.putExtra("id", mRealmResults.get(holder.getAdapterPosition()).getId());
+        Log.i("Adapter ID: ", mRealmResults.get(holder.getAdapterPosition()).getId() + "");
         mContext.startActivity(volumeIntent);
     }
 }

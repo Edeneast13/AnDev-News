@@ -1,9 +1,7 @@
 package com.brianroper.androidweekly.presenters;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.brianroper.androidweekly.services.VolumeService;
 import com.brianroper.androidweekly.views.VolumeView;

@@ -10,17 +10,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".views.ArchiveActivity">
+        <activity
+            android:name=".views.ArchiveActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/WeeklyMaterial" />
+
         <service android:name=".services.ArchiveService"/>
         <service android:name=".services.VolumeService"/>
 
-        <activity android:name=".views.VolumeActivity">
+        <activity
+            android:name=".views.VolumeActivity"
+            android:parentActivityName=".views.ArchiveActivity">
         </activity>
     </application>
 

@@ -7,9 +7,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.brianroper.androidweekly.model.Archive;
+import com.brianroper.androidweekly.model.ArchiveEvent;
 import com.brianroper.androidweekly.model.Constants;
 import com.brianroper.androidweekly.model.Volume;
+import com.brianroper.androidweekly.model.VolumeEvent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,6 +34,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 public class VolumeService extends Service {
 
     private int mVolumeId;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public void onCreate() {
@@ -85,8 +89,10 @@ public class VolumeService extends Service {
             Constants constants = new Constants();
 
             Document document = Jsoup
-                    .connect(constants.ARCHIVE_VOLUME_BASE_URL + "/issues/issue-239")
+                    .connect(constants.ARCHIVE_VOLUME_BASE_URL + volumeArchive.getUrl())
                     .get();
+
+            Log.i("ID: ", volumeArchive.getId() + "");
 
             //html format changes after issue 102
             //if(volumeArchive.getId() >= 103){
@@ -168,7 +174,6 @@ public class VolumeService extends Service {
         realm = Realm.getInstance(realmConfiguration);
 
         try {
-
             for (int i = 0; i < volumes.size(); i++) {
                 final Volume volume = volumes.get(i);
                 realm.executeTransaction(new Realm.Transaction() {
@@ -183,6 +188,9 @@ public class VolumeService extends Service {
                     }
                 });
             }
+
+            Constants constants = new Constants();
+            mEventBus.postSticky(new VolumeEvent(constants.VOLUME_EVENT_FINISHED));
         }
         catch (RealmPrimaryKeyConstraintException e){
             //e.printStackTrace();

@@ -9,7 +9,14 @@ import android.support.v7.widget.Toolbar;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.adapters.VolumeAdapter;
+import com.brianroper.androidweekly.model.ArchiveEvent;
+import com.brianroper.androidweekly.model.Constants;
+import com.brianroper.androidweekly.model.VolumeEvent;
 import com.brianroper.androidweekly.presenters.VolumePresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +30,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
 
     private VolumePresenter mVolumePresenter;
     private VolumeAdapter mVolumeAdapter;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +87,30 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
      * handles the data set of the attached adapter
      */
     public void handleAdapterDataSet(){
-        mVolumeAdapter.getVolumeDataFromRealm();
+        mVolumeAdapter.getVolumeDataFromRealm(getVolumeId());
         mVolumeAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * watches for ArchiveEvent message data change throughout app
+     */
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onVolumeMessageEvent(VolumeEvent volumeEvent){
+        Constants constants = new Constants();
+        if(volumeEvent.message == constants.VOLUME_EVENT_FINISHED) {
+            handleAdapterDataSet();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mEventBus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mEventBus.unregister(this);
     }
 }

@@ -2,6 +2,7 @@ package com.brianroper.androidweekly.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.model.Volume;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,20 +76,22 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     /**
      * retrieves volume data from realm database
      */
-    public void getVolumeDataFromRealm(){
+    public void getVolumeDataFromRealm(int issue){
         Realm realm;
         Realm.init(mContext);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
         realm = Realm.getInstance(realmConfiguration);
-        mRealmResults = realm.where(Volume.class).findAll();
+       //mRealmResults = realm.where(Volume.class).findAll();
+        mRealmResults = realm.where(Volume.class).equalTo("issue", issue).findAll();
     }
 
     /**
      * handles click behavior for recycler view item
      */
     public void setVolumeListener(VolumeViewHolder holder){
-        //TODO: handle webview behavior
+        int position = holder.getAdapterPosition();
+        new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
     }
 }
