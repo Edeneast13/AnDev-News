@@ -1,15 +1,16 @@
 package com.brianroper.androidweekly.services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.brianroper.androidweekly.model.Archive;
+import com.brianroper.androidweekly.model.ArchiveEvent;
 import com.brianroper.androidweekly.model.Constants;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,6 +29,8 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  */
 
 public class ArchiveService extends Service {
+
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public void onCreate() {
@@ -151,7 +154,6 @@ public class ArchiveService extends Service {
         realm = Realm.getInstance(realmConfiguration);
 
         try {
-
             for (int i = 0; i < archives.size(); i++) {
                 final Archive archive = archives.get(i);
 
@@ -165,6 +167,11 @@ public class ArchiveService extends Service {
                     }
                 });
             }
+
+            //notifies subscribers that this service has finished its operations
+            Constants constants = new Constants();
+            mEventBus.postSticky(new ArchiveEvent(constants.ARCHIVE_EVENT_FINISHED));
+
         }catch (RealmPrimaryKeyConstraintException e){
             //e.printStackTrace();
         }

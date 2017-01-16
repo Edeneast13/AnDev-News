@@ -114,6 +114,11 @@ public class VolumeService extends Service {
             volumeBody.push(element.text());
         }
 
+        volumeBody.pop();
+        volumeBody.pop();
+        volumeBody.pop();
+        volumeBody.pop();
+
         for (Element element : source){
             volumeSource.push(element.text());
         }
@@ -180,7 +185,7 @@ public class VolumeService extends Service {
             }
         }
         catch (RealmPrimaryKeyConstraintException e){
-
+            //e.printStackTrace();
         }
     }
 }

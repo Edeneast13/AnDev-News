@@ -7,4 +7,5 @@ package com.brianroper.androidweekly.model;
 public class Constants {
     public String ARCHIVE_BASE_URL = "http://androidweekly.net/archive";
     public String ARCHIVE_VOLUME_BASE_URL = "http://androidweekly.net";
+    public String ARCHIVE_EVENT_FINISHED = "finished";
 }
