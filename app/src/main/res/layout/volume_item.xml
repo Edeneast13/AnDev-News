@@ -3,19 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/baseBackground">
+    android:background="@color/baseBackground"
+    android:paddingBottom="8dp"
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Headline"
         android:id="@+id/volume_headline"
-        android:paddingStart="16dp"
-        android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="8dp"
         android:paddingRight="8dp"
         android:paddingBottom="4dp"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
         android:textSize="18sp"
         android:textColor="@color/primaryText"/>
 
@@ -25,9 +27,11 @@
         android:text="In this article android stuff happens."
         android:id="@+id/volume_summary"
         android:layout_below="@+id/volume_headline"
-        android:paddingBottom="16dp"
+        android:paddingBottom="4dp"
         android:paddingStart="16dp"
         android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
         android:textColor="@color/secondaryText"/>
 
     <TextView
@@ -39,7 +43,10 @@
         android:text="(medium.com)"
         android:textSize="16sp"
         android:textColor="@color/secondaryText"
-        android:paddingTop="16dp"
-        android:layout_alignBottom="@+id/volume_summary"/>
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:layout_below="@+id/volume_summary"/>
 
 </RelativeLayout>

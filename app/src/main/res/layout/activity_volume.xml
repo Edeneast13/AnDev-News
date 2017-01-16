@@ -15,15 +15,22 @@
         android:background="@color/colorPrimary"
         android:elevation="4dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/volume_title"
+        android:text="240"
+        android:textColor="@color/primaryText"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:layout_below="@id/volume_toolbar"/>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/volume_recycler"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:layout_below="@+id/volume_toolbar">
+        android:layout_below="@+id/volume_title">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.adapters.ArchiveAdapter;
 import com.brianroper.androidweekly.model.ArchiveEvent;
 import com.brianroper.androidweekly.model.Constants;
+import com.brianroper.androidweekly.model.RecyclerViewDivider;
 import com.brianroper.androidweekly.presenters.ArchivePresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,6 +29,7 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
 
     private ArchivePresenter mArchivePresenter;
     private ArchiveAdapter mArchiveAdapter;
+    private LinearLayoutManager mLayoutManager;
     private EventBus mEventBus = EventBus.getDefault();
 
     @Override
@@ -69,7 +71,11 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
     @Override
     public void initializeAdapter(){
         mArchiveAdapter = new ArchiveAdapter(getApplicationContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.addItemDecoration(new RecyclerViewDivider(getApplicationContext()));
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mArchiveAdapter);
     }
 
