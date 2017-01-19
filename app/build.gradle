@@ -38,4 +38,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.thefinestartist:finestwebview:1.2.7'
+    compile 'com.github.GrenderG:Toasty:1.1'
 }

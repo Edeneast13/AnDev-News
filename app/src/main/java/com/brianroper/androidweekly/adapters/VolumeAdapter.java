@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.model.Volume;
 import com.brianroper.androidweekly.services.VolumeService;
+import com.brianroper.androidweekly.utils.Util;
 import com.thefinestartist.finestwebview.FinestWebView;
 
 import butterknife.BindView;
@@ -94,7 +95,10 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
      * handles click behavior for recycler view item
      */
     public void setVolumeListener(VolumeViewHolder holder){
-        int position = holder.getAdapterPosition();
-        new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
+        if(Util.activeNetworkCheck(mContext)==true){
+            int position = holder.getAdapterPosition();
+            new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
+        }
+        else{Util.noActiveNetworkToast(mContext);}
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.brianroper.androidweekly.services.ArchiveService;
+import com.brianroper.androidweekly.utils.Util;
 import com.brianroper.androidweekly.views.ArchiveView;
 
 /**
@@ -48,7 +49,10 @@ public class ArchivePresenter implements Presenter<ArchiveView> {
      * starts the ArchiveService
      */
     public void startArchiveService(){
-        Intent archiveService = new Intent(mContext, ArchiveService.class);
-        mContext.startService(archiveService);
+        if(Util.activeNetworkCheck(mContext)==true) {
+            Intent archiveService = new Intent(mContext, ArchiveService.class);
+            mContext.startService(archiveService);
+        }
+        else{Util.noActiveNetworkToast(mContext);}
     }
 }

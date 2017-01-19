@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.brianroper.androidweekly.model.Archive;
-import com.brianroper.androidweekly.model.ArchiveEvent;
 import com.brianroper.androidweekly.model.Constants;
 import com.brianroper.androidweekly.model.Volume;
 import com.brianroper.androidweekly.model.VolumeEvent;
@@ -95,12 +94,15 @@ public class VolumeService extends Service {
             Log.i("ID: ", volumeArchive.getId() + "");
 
             //html format changes after issue 102
-            //if(volumeArchive.getId() >= 103){
+            if(volumeArchive.getId() >= 103){
                 Elements body = document.select("p");
                 Elements source = document.getElementsByClass("main-url");
                 Elements headline = document.getElementsByClass("article-headline");
                 cleanVolumeData(body, source, headline);
-            //}
+            }
+            else{
+                //TODO: handle earlier volume html difference
+            }
         }
         catch (IOException e){
             e.printStackTrace();

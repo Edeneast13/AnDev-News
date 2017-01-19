@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.model.Archive;
+import com.brianroper.androidweekly.utils.Util;
 import com.brianroper.androidweekly.views.VolumeActivity;
 
 import butterknife.BindView;
@@ -91,10 +92,13 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
      * handles click behavior for recycler view item
      */
     public void setArchiveListener(ArchiveViewHolder holder){
-        Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
-        volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        volumeIntent.putExtra("id", mRealmResults.get(holder.getAdapterPosition()).getId());
-        Log.i("Adapter ID: ", mRealmResults.get(holder.getAdapterPosition()).getId() + "");
-        mContext.startActivity(volumeIntent);
+        if(Util.activeNetworkCheck(mContext)==true){
+            Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
+            volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            volumeIntent.putExtra("id", mRealmResults.get(holder.getAdapterPosition()).getId());
+            Log.i("Adapter ID: ", mRealmResults.get(holder.getAdapterPosition()).getId() + "");
+            mContext.startActivity(volumeIntent);
+        }
+        else{Util.noActiveNetworkToast(mContext);}
     }
 }
