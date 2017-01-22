@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.brianroper.androidweekly.model.Archive;
 import com.brianroper.androidweekly.model.Constants;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -100,8 +102,11 @@ public class VolumeService extends Service {
                 Elements headline = document.getElementsByClass("article-headline");
                 cleanVolumeData(body, source, headline);
             }
-            else{
-                //TODO: handle earlier volume html difference
+            else if(volumeArchive.getId() <= 102){
+                Elements body = document.select("p");
+                Elements source = document.select("span");
+                Elements headline = document.select("a");
+                //cleanVolumeData(body, source, headline);
             }
         }
         catch (IOException e){

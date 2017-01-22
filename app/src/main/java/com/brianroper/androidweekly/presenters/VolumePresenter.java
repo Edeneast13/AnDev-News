@@ -2,9 +2,12 @@ package com.brianroper.androidweekly.presenters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.brianroper.androidweekly.services.VolumeService;
 import com.brianroper.androidweekly.views.VolumeView;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by brianroper on 1/12/17.

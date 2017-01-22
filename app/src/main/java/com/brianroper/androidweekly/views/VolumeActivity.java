@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.adapters.VolumeAdapter;
@@ -23,6 +24,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 public class VolumeActivity extends AppCompatActivity implements VolumeView {
 
@@ -55,6 +57,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     /**
      * handles toolbar behavior
      */
+    @Override
     public void handleToolbarBehavior(Toolbar toolbar){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Android Weekly");
@@ -65,15 +68,23 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     /**
      * initializes the presenter for this activity and attaches it to the view
      */
+    @Override
     public void initializePresenter(){
         mVolumePresenter = new VolumePresenter(getApplicationContext());
         mVolumePresenter.attachView(this);
         mVolumePresenter.startVolumeService(getVolumeId());
+        if(getVolumeId() <= 102){
+            Toasty.info(this,
+                    "This issue isn't supported just yet",
+                    Toast.LENGTH_LONG,
+                    true).show();
+        }
     }
 
     /**
      * gets the current volume id from the received intent
      */
+    @Override
     public int getVolumeId(){
         Intent archiveIntent = getIntent();
         int id = archiveIntent.getIntExtra("id", 0)-1;
@@ -84,6 +95,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     /**
      * initializes the activities adapter
      */
+    @Override
     public void initializeAdapter(){
         mVolumeAdapter = new VolumeAdapter(getApplicationContext());
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -97,6 +109,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     /**
      * handles the data set of the attached adapter
      */
+    @Override
     public void handleAdapterDataSet(){
         mVolumeAdapter.getVolumeDataFromRealm(getVolumeId());
         mVolumeAdapter.notifyDataSetChanged();
@@ -128,6 +141,7 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     /**
      * sets the text for the title textview
      */
+    @Override
     public void setTitleTextView(String issue){
         mTitleTextView.setText(issue);
     }
