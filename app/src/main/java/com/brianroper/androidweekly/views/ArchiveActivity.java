@@ -118,4 +118,13 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
         super.onStop();
         mEventBus.unregister(this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

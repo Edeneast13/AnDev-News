@@ -3,22 +3,21 @@ package com.brianroper.androidweekly.presenters;
 import android.content.Context;
 import android.content.Intent;
 
-import com.brianroper.androidweekly.model.Constants;
 import com.brianroper.androidweekly.services.ArchiveService;
 import com.brianroper.androidweekly.utils.Util;
-import com.brianroper.androidweekly.views.ArchiveView;
-import com.thefinestartist.finestwebview.FinestWebView;
+import com.brianroper.androidweekly.views.ArchiveActivity;
+import com.brianroper.androidweekly.views.SplashView;
 
 /**
- * Created by brianroper on 1/9/17.
+ * Created by brianroper on 2/11/17.
  */
 
-public class ArchivePresenter implements Presenter<ArchiveView> {
+public class SplashPresenter implements Presenter<SplashView> {
 
-    private ArchiveView mArchiveView;
+    private SplashView mSplashView;
     private Context mContext;
 
-    public ArchivePresenter(Context context) {
+    public SplashPresenter(Context context) {
         mContext = context;
     }
 
@@ -43,8 +42,8 @@ public class ArchivePresenter implements Presenter<ArchiveView> {
     }
 
     @Override
-    public void attachView(ArchiveView view) {
-        this.mArchiveView = view;
+    public void attachView(SplashView view) {
+        this.mSplashView = view;
     }
 
     /**
@@ -59,13 +58,11 @@ public class ArchivePresenter implements Presenter<ArchiveView> {
     }
 
     /**
-     * shows the android weekly home page in a web view
+     * starts the ArchiveActivity
      */
-    public void showHomePage(){
-        if(Util.activeNetworkCheck(mContext)==true){
-            Constants constants = new Constants();
-            new FinestWebView.Builder(mContext).show(constants.ARCHIVE_BASE_URL);
-        }
-        else{Util.noActiveNetworkToast(mContext);}
+    public void startArchiveActivity(){
+        Intent archiveIntent = new Intent(mContext, ArchiveActivity.class);
+        archiveIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(archiveIntent);
     }
 }

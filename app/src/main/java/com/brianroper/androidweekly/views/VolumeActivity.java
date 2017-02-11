@@ -138,6 +138,11 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
         mEventBus.unregister(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     /**
      * sets the text for the title textview
      */

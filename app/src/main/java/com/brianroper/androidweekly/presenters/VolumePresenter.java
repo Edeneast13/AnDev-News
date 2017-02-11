@@ -34,12 +34,10 @@ public class VolumePresenter implements Presenter<VolumeView> {
 
     @Override
     public void onStop() {
-
     }
 
     @Override
     public void onPause() {
-
     }
 
     @Override

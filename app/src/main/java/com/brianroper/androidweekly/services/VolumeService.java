@@ -199,9 +199,10 @@ public class VolumeService extends Service {
                     }
                 });
             }
-
             Constants constants = new Constants();
             mEventBus.postSticky(new VolumeEvent(constants.VOLUME_EVENT_FINISHED));
+
+            realm.close();
         }
         catch (RealmPrimaryKeyConstraintException e){
         }

@@ -174,6 +174,8 @@ public class ArchiveService extends Service {
             Constants constants = new Constants();
             mEventBus.postSticky(new ArchiveEvent(constants.ARCHIVE_EVENT_FINISHED));
 
+            realm.close();
+
         }catch (RealmPrimaryKeyConstraintException e){
             //e.printStackTrace();
         }
