@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.brianroper.androidweekly.model.Archive;
 import com.brianroper.androidweekly.model.Constants;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -206,7 +204,6 @@ public class VolumeService extends Service {
             mEventBus.postSticky(new VolumeEvent(constants.VOLUME_EVENT_FINISHED));
         }
         catch (RealmPrimaryKeyConstraintException e){
-            e.printStackTrace();
         }
     }
 }

@@ -60,9 +60,9 @@ public class VolumeActivity extends AppCompatActivity implements VolumeView {
     @Override
     public void handleToolbarBehavior(Toolbar toolbar){
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Android Weekly");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setLogo(R.drawable.logo);
     }
 
     /**

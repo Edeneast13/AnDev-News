@@ -157,15 +157,17 @@ public class ArchiveService extends Service {
             for (int i = 0; i < archives.size(); i++) {
                 final Archive archive = archives.get(i);
 
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        Archive managedArchive = realm.createObject(Archive.class, archive.getId());
-                        managedArchive.setTitle(archive.getTitle());
-                        managedArchive.setDate(archive.getDate());
-                        managedArchive.setUrl(archive.getUrl());
-                    }
-                });
+                if (realm.where(Archive.class).equalTo("id", archive.getId()).findFirst()==null){
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            Archive managedArchive = realm.createObject(Archive.class, archive.getId());
+                            managedArchive.setTitle(archive.getTitle());
+                            managedArchive.setDate(archive.getDate());
+                            managedArchive.setUrl(archive.getUrl());
+                        }
+                    });
+                }
             }
 
             //notifies subscribers that this service has finished its operations

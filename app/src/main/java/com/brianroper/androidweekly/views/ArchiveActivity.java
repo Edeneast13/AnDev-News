@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.*;
+import android.view.View;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.adapters.ArchiveAdapter;
@@ -52,7 +54,13 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
     @Override
     public void handleToolbarBehavior(Toolbar toolbar){
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Android Weekly");
+        toolbar.setLogo(R.drawable.logo);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mArchivePresenter.showHomePage();
+            }
+        });
     }
 
     /**
