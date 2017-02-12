@@ -70,7 +70,7 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveView {
     public void initializePresenter(){
         mArchivePresenter = new ArchivePresenter(getApplicationContext());
         mArchivePresenter.attachView(this);
-        mArchivePresenter.startArchiveService();
+        //mArchivePresenter.startArchiveService();
     }
 
     /**

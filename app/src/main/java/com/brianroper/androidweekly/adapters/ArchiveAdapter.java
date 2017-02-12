@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.brianroper.androidweekly.R;
 import com.brianroper.androidweekly.model.Archive;
+import com.brianroper.androidweekly.model.Constants;
 import com.brianroper.androidweekly.utils.Util;
 import com.brianroper.androidweekly.views.VolumeActivity;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,11 +95,25 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
      */
     public void setArchiveListener(ArchiveViewHolder holder){
         if(Util.activeNetworkCheck(mContext)==true){
-            Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
-            volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            volumeIntent.putExtra("id", mRealmResults.get(holder.getAdapterPosition()).getId());
-            Log.i("Adapter ID: ", mRealmResults.get(holder.getAdapterPosition()).getId() + "");
-            mContext.startActivity(volumeIntent);
+            if(holder.getAdapterPosition()>=104){
+                Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
+                volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                volumeIntent.putExtra("id", mRealmResults.get(holder.getAdapterPosition()).getId());
+                Log.i("Adapter ID: ", mRealmResults.get(holder.getAdapterPosition()).getId() + "");
+                mContext.startActivity(volumeIntent);
+            }
+            else{
+                Constants constants = new Constants();
+                int issue = holder.getAdapterPosition()+1;
+                String issueUrl = constants.ARCHIVE_VOLUME_BASE_URL
+                                    + constants.VOLUME_ISSUE_PARAM
+                                    + constants.VOLUME_ISSUE_ID_PARAM
+                                    + issue;
+                new FinestWebView.Builder(mContext)
+                        .show(issueUrl);
+                Log.i("Issue URL: ", issueUrl);
+            }
+
         }
         else{Util.noActiveNetworkToast(mContext);}
     }

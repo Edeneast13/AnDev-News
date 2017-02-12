@@ -24,6 +24,7 @@
         android:textSize="25sp"
         android:gravity="center"
         android:paddingTop="4dp"
+        android:fontFamily="sans-serif-light"
         android:layout_below="@id/volume_toolbar"/>
 
     <android.support.v7.widget.RecyclerView

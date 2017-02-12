@@ -47,8 +47,10 @@ public class VolumeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mVolumeId = intent.getExtras().getInt("id" ,0);
-        getVolumeDataFromRealm();
+        if(intent!=null){
+            mVolumeId = intent.getExtras().getInt("id" ,0);
+            getVolumeDataFromRealm();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
