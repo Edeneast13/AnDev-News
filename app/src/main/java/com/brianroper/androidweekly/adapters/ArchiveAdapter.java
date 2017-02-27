@@ -113,7 +113,6 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
                         .show(issueUrl);
                 Log.i("Issue URL: ", issueUrl);
             }
-
         }
         else{Util.noActiveNetworkToast(mContext);}
     }

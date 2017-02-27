@@ -64,7 +64,7 @@ public class ArchivePresenter implements Presenter<ArchiveView> {
     public void showHomePage(){
         if(Util.activeNetworkCheck(mContext)==true){
             Constants constants = new Constants();
-            new FinestWebView.Builder(mContext).show(constants.ARCHIVE_BASE_URL);
+            new FinestWebView.Builder(mContext).show(constants.ARCHIVE_VOLUME_BASE_URL);
         }
         else{Util.noActiveNetworkToast(mContext);}
     }
