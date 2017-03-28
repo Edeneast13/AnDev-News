@@ -1,6 +1,5 @@
 package com.brianroper.andevweekly.presenters;
 
-import com.brianroper.andevweekly.model.Favorite;
 import com.brianroper.andevweekly.views.FavoriteView;
 
 /**
@@ -34,5 +33,9 @@ public class FavoritePresenter implements Presenter<FavoriteView> {
     @Override
     public void attachView(FavoriteView favoriteView) {
         mFavoriteView = favoriteView;
+    }
+
+    public void getRealmData(){
+        mFavoriteView.getDataFromRealm();
     }
 }

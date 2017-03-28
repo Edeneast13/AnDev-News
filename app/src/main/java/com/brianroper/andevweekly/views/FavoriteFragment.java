@@ -2,18 +2,14 @@ package com.brianroper.andevweekly.views;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.view.View;
 
 import com.brianroper.andevweekly.R;
 import com.brianroper.andevweekly.adapters.FavoriteAdapter;
-import com.brianroper.andevweekly.adapters.VolumeAdapter;
-import com.brianroper.andevweekly.model.Favorite;
 import com.brianroper.andevweekly.model.RecyclerViewDivider;
 import com.brianroper.andevweekly.presenters.FavoritePresenter;
 
@@ -22,8 +18,6 @@ import butterknife.ButterKnife;
 
 public class FavoriteFragment extends Fragment implements FavoriteView {
 
-    @BindView(R.id.favorite_toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.favorite_recycler)
     RecyclerView mRecyclerView;
 
@@ -33,7 +27,6 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        mFavoritePresenter = new FavoritePresenter();
         super.onCreate(savedInstanceState);
     }
 
@@ -49,6 +42,8 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
         initializePresenter();
         initializeAdapter();
+
+        handleAdapterDataSet();
 
         return root;
     }
@@ -67,9 +62,19 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     }
 
     public void initializePresenter(){
+        mFavoritePresenter = new FavoritePresenter();
         mFavoritePresenter.attachView(this);
     }
 
     @Override
     public void finish() {}
+
+    @Override
+    public void getDataFromRealm() {
+        mFavoriteAdapter.getFavoriteDataFromRealm();
+    }
+
+    public void handleAdapterDataSet(){
+        mFavoritePresenter.getRealmData();
+    }
 }

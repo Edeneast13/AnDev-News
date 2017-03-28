@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.brianroper.andevweekly.R;
 import com.brianroper.andevweekly.model.Favorite;
-import com.brianroper.andevweekly.model.Volume;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

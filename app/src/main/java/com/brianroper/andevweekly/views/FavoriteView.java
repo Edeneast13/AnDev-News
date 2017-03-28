@@ -5,5 +5,5 @@ package com.brianroper.andevweekly.views;
  */
 
 public interface FavoriteView extends View {
-
+    void getDataFromRealm();
 }
