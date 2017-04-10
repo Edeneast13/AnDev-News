@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.view.View;
@@ -76,7 +75,7 @@ public class ArchiveActivity extends AppCompatActivity {
      * shows the android weekly home page in a web view
      */
     public void showHomePage(){
-        if(Util.activeNetworkCheck(getApplicationContext())==true){
+        if(Util.activeNetworkCheck(getApplicationContext())){
             Constants constants = new Constants();
             new FinestWebView.Builder(getApplicationContext()).show(constants.ARCHIVE_VOLUME_BASE_URL);
         }
@@ -106,5 +105,13 @@ public class ArchiveActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, ArchiveFragment.newInstance());
+        transaction.commit();
     }
 }

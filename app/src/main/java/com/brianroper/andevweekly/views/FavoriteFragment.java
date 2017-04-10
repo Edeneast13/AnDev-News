@@ -7,19 +7,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.brianroper.andevweekly.R;
 import com.brianroper.andevweekly.adapters.FavoriteAdapter;
+import com.brianroper.andevweekly.model.Favorite;
 import com.brianroper.andevweekly.model.RecyclerViewDivider;
 import com.brianroper.andevweekly.presenters.FavoritePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
 public class FavoriteFragment extends Fragment implements FavoriteView {
 
     @BindView(R.id.favorite_recycler)
     RecyclerView mRecyclerView;
+    @BindView(R.id.favorite_emptyview)
+    RelativeLayout mEmptyView;
 
     private FavoritePresenter mFavoritePresenter;
     private FavoriteAdapter mFavoriteAdapter;
@@ -36,7 +41,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.activity_favorite, container, false);
+        View root = inflater.inflate(R.layout.fragment_favorite, container, false);
 
         ButterKnife.bind(this, root);
 
@@ -71,7 +76,15 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
     @Override
     public void getDataFromRealm() {
-        mFavoriteAdapter.getFavoriteDataFromRealm();
+        RealmResults<Favorite> results = mFavoriteAdapter.getFavoriteDataFromRealm();
+        if(results.isEmpty()){
+           mEmptyView.setVisibility(View.VISIBLE);
+           mRecyclerView.setVisibility(View.GONE);
+        }
+        else{
+            mEmptyView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void handleAdapterDataSet(){

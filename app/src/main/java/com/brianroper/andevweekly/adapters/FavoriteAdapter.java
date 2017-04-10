@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.brianroper.andevweekly.R;
+import com.brianroper.andevweekly.model.Constants;
 import com.brianroper.andevweekly.model.Favorite;
+import com.brianroper.andevweekly.utils.Util;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +37,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View root = inflater.inflate(R.layout.volume_item, parent, false);
         final FavoriteViewHolder favoriteViewHolder = new FavoriteViewHolder(root);
+
+        root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Util.activeNetworkCheck(mContext)){
+                    setFavoriteListener(favoriteViewHolder);
+                }
+                else{Util.noActiveNetworkToast(mContext);}
+            }
+        });
+
         return favoriteViewHolder;
     }
 
@@ -63,7 +77,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         }
     }
 
-    public void getFavoriteDataFromRealm(){
+    public RealmResults<Favorite> getFavoriteDataFromRealm(){
         Realm realm;
         Realm.init(mContext);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
@@ -71,5 +85,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                 .build();
         realm = Realm.getInstance(realmConfiguration);
         mRealmResults = realm.where(Favorite.class).findAll();
+        return mRealmResults;
+    }
+
+    /**
+     * handles click behavior for recycler view item
+     */
+    public void setFavoriteListener(FavoriteAdapter.FavoriteViewHolder holder){
+        if(Util.activeNetworkCheck(mContext)){
+            int position = holder.getAdapterPosition();
+            new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
+        }
+        else{Util.noActiveNetworkToast(mContext);}
     }
 }
