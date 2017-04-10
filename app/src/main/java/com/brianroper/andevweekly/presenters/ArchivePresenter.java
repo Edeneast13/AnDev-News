@@ -3,11 +3,9 @@ package com.brianroper.andevweekly.presenters;
 import android.content.Context;
 import android.content.Intent;
 
-import com.brianroper.andevweekly.model.Constants;
 import com.brianroper.andevweekly.services.ArchiveService;
 import com.brianroper.andevweekly.utils.Util;
 import com.brianroper.andevweekly.views.ArchiveView;
-import com.thefinestartist.finestwebview.FinestWebView;
 
 /**
  * Created by brianroper on 1/9/17.
@@ -58,14 +56,7 @@ public class ArchivePresenter implements Presenter<ArchiveView> {
         else{Util.noActiveNetworkToast(mContext);}
     }
 
-    /**
-     * shows the android weekly home page in a web view
-     */
-    public void showHomePage(){
-        if(Util.activeNetworkCheck(mContext)==true){
-            Constants constants = new Constants();
-            new FinestWebView.Builder(mContext).show(constants.ARCHIVE_VOLUME_BASE_URL);
-        }
-        else{Util.noActiveNetworkToast(mContext);}
+    public void getRealmData(){
+        mArchiveView.getDataFromRealm();
     }
 }

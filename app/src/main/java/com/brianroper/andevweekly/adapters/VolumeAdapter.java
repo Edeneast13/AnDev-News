@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.brianroper.andevweekly.R;
+import com.brianroper.andevweekly.model.Favorite;
 import com.brianroper.andevweekly.model.Volume;
 import com.brianroper.andevweekly.utils.Util;
 import com.thefinestartist.finestwebview.FinestWebView;
@@ -45,6 +46,13 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
             }
         });
 
+        root.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setVolumeLongListener(volumeViewHolder);
+                return true;
+            }
+        });
         return volumeViewHolder;
     }
 
@@ -77,7 +85,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     /**
      * retrieves volume data from realm database
      */
-    public void getVolumeDataFromRealm(int issue){
+    public RealmResults<Volume> getVolumeDataFromRealm(int issue){
         Realm realm;
         Realm.init(mContext);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
@@ -86,16 +94,40 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         realm = Realm.getInstance(realmConfiguration);
         mRealmResults = realm.where(Volume.class).equalTo("issue", issue).findAll();
         Log.i("RealmResult Size: ", mRealmResults.size() + "");
+        return mRealmResults;
     }
 
     /**
      * handles click behavior for recycler view item
      */
     public void setVolumeListener(VolumeViewHolder holder){
-        if(Util.activeNetworkCheck(mContext)==true){
+        if(Util.activeNetworkCheck(mContext)){
             int position = holder.getAdapterPosition();
             new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
         }
         else{Util.noActiveNetworkToast(mContext);}
+    }
+
+    public void setVolumeLongListener(VolumeViewHolder holder){
+        final int position = holder.getAdapterPosition();
+        Realm realm;
+        Realm.init(mContext);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfiguration);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Favorite favorite = realm
+                        .createObject(Favorite.class, mRealmResults.get(position).getId());
+                favorite.setIssue(mRealmResults.get(position).getIssue());
+                favorite.setLink(mRealmResults.get(position).getLink());
+                favorite.setSummary(mRealmResults.get(position).getSummary());
+                favorite.setHeadline(mRealmResults.get(position).getHeadline());
+                favorite.setSource(mRealmResults.get(position).getSource());
+            }
+        });
+        realm.close();
     }
 }

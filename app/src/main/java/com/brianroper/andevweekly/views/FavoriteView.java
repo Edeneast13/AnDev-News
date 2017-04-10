@@ -1,9 +1,9 @@
 package com.brianroper.andevweekly.views;
 
 /**
- * Created by brianroper on 1/9/17.
+ * Created by brianroper on 3/16/17.
  */
 
-public interface ArchiveView extends View {
+public interface FavoriteView extends View {
     void getDataFromRealm();
 }
