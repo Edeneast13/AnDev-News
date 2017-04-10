@@ -85,7 +85,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     /**
      * retrieves volume data from realm database
      */
-    public void getVolumeDataFromRealm(int issue){
+    public RealmResults<Volume> getVolumeDataFromRealm(int issue){
         Realm realm;
         Realm.init(mContext);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
@@ -94,6 +94,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         realm = Realm.getInstance(realmConfiguration);
         mRealmResults = realm.where(Volume.class).equalTo("issue", issue).findAll();
         Log.i("RealmResult Size: ", mRealmResults.size() + "");
+        return mRealmResults;
     }
 
     /**

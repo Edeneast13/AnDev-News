@@ -47,4 +47,8 @@ public class VolumePresenter implements Presenter<VolumeView> {
         volumeServiceIntent.putExtra("id", id);
         mContext.startService(volumeServiceIntent);
     }
+
+    public void getRealmData(){
+        mVolumeView.getDataFromRealm();
+    }
 }
