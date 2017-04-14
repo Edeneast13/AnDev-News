@@ -2,6 +2,7 @@ package com.brianroper.andevweekly.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,12 +50,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             }
         });
 
-        favoriteViewHolder.mFavoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setFavoriteButtonListener(favoriteViewHolder);
-            }
-        });
+        //setFavoriteButtonListener(favoriteViewHolder);
 
         return favoriteViewHolder;
     }
@@ -76,8 +72,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         public TextView mFavoriteHeadline;
         @BindView(R.id.favorite_summary)
         public TextView mFavoriteSummary;
-        @BindView(R.id.favorite_add)
-        public ImageButton mFavoriteButton;
+        //@BindView(R.id.favorite_add)
+        //public ImageButton mFavoriteButton;
 
         public FavoriteViewHolder(View itemView) {
             super(itemView);
@@ -107,28 +103,40 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         else{Util.noActiveNetworkToast(mContext);}
     }
 
-    public void setFavoriteButtonListener(FavoriteViewHolder holder){
-        final int position = holder.getAdapterPosition();
-        Realm realm;
-        Realm.init(mContext);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        realm = Realm.getInstance(realmConfiguration);
-        realm.executeTransaction(new Realm.Transaction() {
+    //TODO: fix realm delete bug
+    /* public void setFavoriteButtonListener(final FavoriteViewHolder holder){
+        holder.mFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void execute(Realm realm) {
-                realm.where(Favorite.class)
-                        .equalTo("id", mRealmResults.get(position).getId())
-                        .findFirst()
-                        .deleteFromRealm();
-                Volume volume = realm.where(Volume.class)
-                        .equalTo("id", mRealmResults.get(position).getId())
-                        .findFirst();
-                volume.setSaved(false);
-                realm.copyToRealmOrUpdate(volume);
-                notifyDataSetChanged();
+            public void onClick(View v) {
+                final int position = holder.getAdapterPosition();
+                try{
+                    Realm realm;
+                    Realm.init(mContext);
+                    RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                            .deleteRealmIfMigrationNeeded()
+                            .build();
+                    realm = Realm.getInstance(realmConfiguration);
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            Favorite favorite = realm.where(Favorite.class)
+                                    .equalTo("id", mRealmResults.get(position).getId())
+                                    .findFirst();
+                            Log.i("Favorite: ", favorite+"");
+                            favorite.deleteFromRealm();
+                            Volume volume = realm.where(Volume.class)
+                                    .equalTo("id", mRealmResults.get(position).getId())
+                                    .findFirst();
+                            volume.setSaved(false);
+                            realm.copyToRealmOrUpdate(volume);
+                            realm.close();
+                            notifyDataSetChanged();
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
-    }
+    }*/
 }
