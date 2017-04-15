@@ -50,7 +50,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             }
         });
 
-        //setFavoriteButtonListener(favoriteViewHolder);
+        setFavoriteButtonListener(favoriteViewHolder);
 
         return favoriteViewHolder;
     }
@@ -72,8 +72,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         public TextView mFavoriteHeadline;
         @BindView(R.id.favorite_summary)
         public TextView mFavoriteSummary;
-        //@BindView(R.id.favorite_add)
-        //public ImageButton mFavoriteButton;
+        @BindView(R.id.favorite_add)
+        public ImageButton mFavoriteButton;
 
         public FavoriteViewHolder(View itemView) {
             super(itemView);
@@ -104,7 +104,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     }
 
     //TODO: fix realm delete bug
-    /* public void setFavoriteButtonListener(final FavoriteViewHolder holder){
+    public void setFavoriteButtonListener(final FavoriteViewHolder holder){
         holder.mFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,10 +122,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                             Favorite favorite = realm.where(Favorite.class)
                                     .equalTo("id", mRealmResults.get(position).getId())
                                     .findFirst();
-                            Log.i("Favorite: ", favorite+"");
+                            int id = favorite.getId();
                             favorite.deleteFromRealm();
                             Volume volume = realm.where(Volume.class)
-                                    .equalTo("id", mRealmResults.get(position).getId())
+                                    .equalTo("id", id)
                                     .findFirst();
                             volume.setSaved(false);
                             realm.copyToRealmOrUpdate(volume);
@@ -138,5 +138,5 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                 }
             }
         });
-    }*/
+    }
 }

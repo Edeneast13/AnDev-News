@@ -113,9 +113,7 @@ public class VolumeFragment extends Fragment implements VolumeView {
     }
 
     @Override
-    public void setTitleTextView(String issue) {
-
-    }
+    public void setTitleTextView(String issue) {}
 
     /**
      * watches for VolumeEvent message data change throughout app
