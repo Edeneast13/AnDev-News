@@ -16,7 +16,7 @@
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="sensor"
+            android:screenOrientation="portrait"
             android:theme="@style/WeeklyMaterial"/>
 
         <service android:name=".services.ArchiveService"/>
@@ -38,8 +38,8 @@
             android:parentActivityName=".views.ArchiveActivity"
             android:theme="@style/AboutMaterial">
         </activity>
-        <activity android:name=".views.FavoriteFragment">
-        </activity>
+        <fragment android:name=".views.FavoriteFragment">
+        </fragment>
     </application>
 
 </manifest>
