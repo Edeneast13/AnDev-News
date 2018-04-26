@@ -38,8 +38,7 @@
             android:parentActivityName=".archive.ArchiveActivity"
             android:theme="@style/AboutMaterial">
         </activity>
-        <fragment android:name=".views.FavoriteFragment">
-        </fragment>
+
     </application>
 
 </manifest>
