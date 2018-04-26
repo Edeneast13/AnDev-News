@@ -14,7 +14,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="4dp"
         android:textSize="18sp"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/cardTextPrimary"
         android:fontFamily="sans-serif-regular"/>
 
     <TextView
@@ -26,6 +26,6 @@
         android:paddingBottom="8dp"
         android:paddingStart="16dp"
         android:paddingLeft="16dp"
-        android:textColor="@color/secondaryText"/>
+        android:textColor="@color/cardTextSecondary"/>
 
 </RelativeLayout>
