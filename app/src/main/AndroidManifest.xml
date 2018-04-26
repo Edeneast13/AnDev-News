@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".views.ArchiveActivity">
+        <activity android:name=".archive.ArchiveActivity">
         </activity>
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
@@ -19,14 +19,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/WeeklyMaterial"/>
 
-        <service android:name=".services.ArchiveService"/>
-        <service android:name=".services.VolumeService"/>
+        <service android:name=".archive.ArchiveService"/>
+        <service android:name=".volume.VolumeService"/>
 
         <activity
-            android:name=".views.VolumeActivity"
-            android:parentActivityName=".views.ArchiveActivity">
+            android:name=".volume.VolumeActivity"
+            android:parentActivityName=".archive.ArchiveActivity">
         </activity>
-        <activity android:name=".views.SplashActivity">
+        <activity android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -34,8 +34,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.AboutActivity"
-            android:parentActivityName=".views.ArchiveActivity"
+            android:name=".about.AboutActivity"
+            android:parentActivityName=".archive.ArchiveActivity"
             android:theme="@style/AboutMaterial">
         </activity>
         <fragment android:name=".views.FavoriteFragment">
