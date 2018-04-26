@@ -1,11 +1,11 @@
 package com.brianroper.andevweekly.favorites;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.brianroper.andevweekly.R;
@@ -35,29 +35,31 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View root = inflater.inflate(R.layout.favorite_item, parent, false);
-        final FavoriteViewHolder favoriteViewHolder = new FavoriteViewHolder(root);
-
-        root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Util.activeNetworkCheck(mContext)){
-                    setFavoriteListener(favoriteViewHolder);
-                }
-                else{Util.noActiveNetworkToast(mContext);}
-            }
-        });
-
-        setFavoriteButtonListener(favoriteViewHolder);
-
-        return favoriteViewHolder;
+        View root = inflater.inflate(R.layout.volume_item, parent, false);
+        return new FavoriteViewHolder(root);
     }
 
     @Override
-    public void onBindViewHolder(FavoriteAdapter.FavoriteViewHolder holder, int position) {
+    public void onBindViewHolder(FavoriteAdapter.FavoriteViewHolder holder, final int position) {
         holder.mFavoriteHeadline.setText(mRealmResults.get(position).getHeadline());
         holder.mFavoriteSummary.setText(mRealmResults.get(position).getSummary()
                 + " " + mRealmResults.get(position).getSource());
+
+        holder.mFavoriteLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //TODO: add dialog asking user to confirm delete
+                deleteArticle(position);
+                return true;
+            }
+        });
+
+        holder.mFavoriteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openArticleWebView(position);
+            }
+        });
     }
 
     @Override
@@ -66,19 +68,23 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     }
 
     public class FavoriteViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.favorite_headline)
-        public TextView mFavoriteHeadline;
-        @BindView(R.id.favorite_summary)
-        public TextView mFavoriteSummary;
-        @BindView(R.id.favorite_add)
-        public ImageButton mFavoriteButton;
+        @BindView(R.id.volume_headline)
+        TextView mFavoriteHeadline;
+        @BindView(R.id.volume_summary)
+        TextView mFavoriteSummary;
+        @BindView(R.id.volume_item)
+        ConstraintLayout mFavoriteLayout;
 
-        public FavoriteViewHolder(View itemView) {
+        FavoriteViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
+    /**
+     * retrieves favorite data from realm database
+     * @return realm results containing volumes
+     */
     public RealmResults<Favorite> getFavoriteDataFromRealm(){
         Realm realm;
         Realm.init(mContext);
@@ -91,50 +97,47 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     }
 
     /**
-     * handles click behavior for recycler view item
+     * opens article in  a webview using object url
+     * @param position
      */
-    public void setFavoriteListener(FavoriteAdapter.FavoriteViewHolder holder){
+    private void openArticleWebView(int position){
         if(Util.activeNetworkCheck(mContext)){
-            int position = holder.getAdapterPosition();
             new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
         }
         else{Util.noActiveNetworkToast(mContext);}
     }
 
-    //TODO: fix realm delete bug
-    public void setFavoriteButtonListener(final FavoriteViewHolder holder){
-        holder.mFavoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int position = holder.getAdapterPosition();
-                try{
-                    Realm realm;
-                    Realm.init(mContext);
-                    RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                            .deleteRealmIfMigrationNeeded()
-                            .build();
-                    realm = Realm.getInstance(realmConfiguration);
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            Favorite favorite = realm.where(Favorite.class)
-                                    .equalTo("id", mRealmResults.get(position).getId())
-                                    .findFirst();
-                            int id = favorite.getId();
-                            favorite.deleteFromRealm();
-                            Volume volume = realm.where(Volume.class)
-                                    .equalTo("id", id)
-                                    .findFirst();
-                            volume.setSaved(false);
-                            realm.copyToRealmOrUpdate(volume);
-                            realm.close();
-                            notifyDataSetChanged();
-                        }
-                    });
-                }catch (Exception e){
-                    e.printStackTrace();
+    /**
+     * deletes the article in realm database of favorites
+     * @param position
+     */
+    private void deleteArticle(final int position){
+        try{
+            Realm realm;
+            Realm.init(mContext);
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            realm = Realm.getInstance(realmConfiguration);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Favorite favorite = realm.where(Favorite.class)
+                            .equalTo("id", mRealmResults.get(position).getId())
+                            .findFirst();
+                    int id = favorite.getId();
+                    favorite.deleteFromRealm();
+                    Volume volume = realm.where(Volume.class)
+                            .equalTo("id", id)
+                            .findFirst();
+                    volume.setSaved(false);
+                    realm.copyToRealmOrUpdate(volume);
+                    realm.close();
+                    notifyDataSetChanged();
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

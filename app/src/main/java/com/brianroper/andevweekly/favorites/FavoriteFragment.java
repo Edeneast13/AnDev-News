@@ -58,7 +58,6 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     public void initializeAdapter(){
         mFavoriteAdapter = new FavoriteAdapter(getActivity());
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.addItemDecoration(new RecyclerViewDivider(getActivity()));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mFavoriteAdapter);
     }

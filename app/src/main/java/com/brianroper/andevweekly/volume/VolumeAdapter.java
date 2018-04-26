@@ -37,8 +37,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     public VolumeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View root = inflater.inflate(R.layout.volume_item, parent, false);
-        final VolumeViewHolder volumeViewHolder = new VolumeViewHolder(root);
-        return volumeViewHolder;
+        return new VolumeViewHolder(root);
     }
 
     @Override
@@ -50,6 +49,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         holder.mVolumeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                //TODO: add dialog asking user to confirm save
                 saveArticle(position);
                 return true;
             }

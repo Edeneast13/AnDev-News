@@ -43,16 +43,4 @@
 
     </RelativeLayout>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_delete"
-        android:layout_centerVertical="true"
-        android:id="@+id/favorite_add"
-        android:background="@null"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_weight="1"
-        android:paddingRight="16dp"
-        android:layout_gravity="center_vertical"/>
 </LinearLayout>
