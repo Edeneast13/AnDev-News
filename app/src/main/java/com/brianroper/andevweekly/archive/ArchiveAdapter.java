@@ -98,6 +98,7 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
                 Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
                 volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 volumeIntent.putExtra("id", mRealmResults.get(holder.getAdapterPosition()).getId());
+                volumeIntent.putExtra("issueNumber", holder.getAdapterPosition() + 1);
                 Log.i("Adapter ID: ", mRealmResults.get(holder.getAdapterPosition()).getId() + "");
                 mContext.startActivity(volumeIntent);
             }

@@ -1,5 +1,6 @@
 package com.brianroper.andevweekly.volume;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,9 @@ public class VolumeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setLogo(R.drawable.toolbarlogo);
+        getSupportActionBar()
+                .setTitle("Android Weekly "
+                        + String.valueOf(getIntent().getIntExtra("issueNumber", 0)));
     }
 
     /**

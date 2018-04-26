@@ -57,10 +57,10 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         holder.mVolumeSummary.setText(mRealmResults.get(position).getSummary()
                 + " " + mRealmResults.get(position).getSource());
         if(mRealmResults.get(position).getSaved()){
-            holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_check));
+           // holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_check));
         }
         else{
-            holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_add));
+           // holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_add));
         }
     }
 
@@ -74,8 +74,6 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         public TextView mVolumeHeadline;
         @BindView(R.id.volume_summary)
         public TextView mVolumeSummary;
-        @BindView(R.id.volume_add)
-        public ImageButton mVolumeButton;
 
         public VolumeViewHolder(View itemView) {
             super(itemView);
@@ -110,46 +108,46 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     }
 
     public void setVolumeAddListener(final VolumeViewHolder holder){
-        holder.mVolumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int position = holder.getAdapterPosition();
-                Realm realm;
-                Realm.init(mContext);
-                RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                        .deleteRealmIfMigrationNeeded()
-                        .build();
-                realm = Realm.getInstance(realmConfiguration);
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        if(mRealmResults.get(position).getSaved()){
-                            realm.where(Favorite.class)
-                                    .equalTo("id", mRealmResults.get(position).getId())
-                                    .findFirst()
-                                    .deleteFromRealm();
-                            Volume volume = mRealmResults.get(position);
-                            volume.setSaved(false);
-                            realm.copyToRealmOrUpdate(volume);
-                        }
-                        else {
-                            Favorite favorite = realm
-                                    .createObject(Favorite.class, mRealmResults.get(position).getId());
-                            favorite.setIssue(mRealmResults.get(position).getIssue());
-                            favorite.setLink(mRealmResults.get(position).getLink());
-                            favorite.setSummary(mRealmResults.get(position).getSummary());
-                            favorite.setHeadline(mRealmResults.get(position).getHeadline());
-                            favorite.setSource(mRealmResults.get(position).getSource());
-                            Volume volume = mRealmResults.get(position);
-                            volume.setSaved(true);
-                            realm.copyToRealmOrUpdate(volume);
-                        }
-                    }
-                });
-                realm.close();
-                holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.ic_check));
-                notifyDataSetChanged();
-            }
-        });
+//        holder.mVolumeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final int position = holder.getAdapterPosition();
+//                Realm realm;
+//                Realm.init(mContext);
+//                RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+//                        .deleteRealmIfMigrationNeeded()
+//                        .build();
+//                realm = Realm.getInstance(realmConfiguration);
+//                realm.executeTransaction(new Realm.Transaction() {
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        if(mRealmResults.get(position).getSaved()){
+//                            realm.where(Favorite.class)
+//                                    .equalTo("id", mRealmResults.get(position).getId())
+//                                    .findFirst()
+//                                    .deleteFromRealm();
+//                            Volume volume = mRealmResults.get(position);
+//                            volume.setSaved(false);
+//                            realm.copyToRealmOrUpdate(volume);
+//                        }
+//                        else {
+//                            Favorite favorite = realm
+//                                    .createObject(Favorite.class, mRealmResults.get(position).getId());
+//                            favorite.setIssue(mRealmResults.get(position).getIssue());
+//                            favorite.setLink(mRealmResults.get(position).getLink());
+//                            favorite.setSummary(mRealmResults.get(position).getSummary());
+//                            favorite.setHeadline(mRealmResults.get(position).getHeadline());
+//                            favorite.setSource(mRealmResults.get(position).getSource());
+//                            Volume volume = mRealmResults.get(position);
+//                            volume.setSaved(true);
+//                            realm.copyToRealmOrUpdate(volume);
+//                        }
+//                    }
+//                });
+//                realm.close();
+//                holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.ic_check));
+//                notifyDataSetChanged();
+//            }
+//        });
     }
 }

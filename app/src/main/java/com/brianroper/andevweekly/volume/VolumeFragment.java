@@ -34,8 +34,6 @@ public class VolumeFragment extends Fragment implements VolumeView {
     public Toolbar mToolbar;
     @BindView(R.id.volume_recycler)
     public RecyclerView mRecyclerView;
-    @BindView(R.id.volume_title)
-    public TextView mTitleTextView;
 
     private VolumePresenter mVolumePresenter;
     private VolumeAdapter mVolumeAdapter;
@@ -91,7 +89,6 @@ public class VolumeFragment extends Fragment implements VolumeView {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
-        mRecyclerView.addItemDecoration(new RecyclerViewDivider(getActivity()));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mVolumeAdapter);
     }
