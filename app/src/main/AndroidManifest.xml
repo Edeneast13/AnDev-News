@@ -11,8 +11,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".archive.ArchiveActivity">
-        </activity>
+
+        <activity android:name=".archive.ArchiveActivity"/>
+
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -24,20 +25,19 @@
 
         <activity
             android:name=".volume.VolumeActivity"
-            android:parentActivityName=".archive.ArchiveActivity">
-        </activity>
+            android:parentActivityName=".archive.ArchiveActivity"/>
+
         <activity android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".about.AboutActivity"
             android:parentActivityName=".archive.ArchiveActivity"
-            android:theme="@style/AboutMaterial">
-        </activity>
+            android:theme="@style/AboutMaterial"/>
 
     </application>
 
