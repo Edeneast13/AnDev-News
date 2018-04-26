@@ -16,6 +16,7 @@ public class Volume extends RealmObject{
     @PrimaryKey
     private int id;
     private boolean isSaved = false;
+    private String category;
 
     public String getHeadline() {
         return headline;
@@ -71,5 +72,13 @@ public class Volume extends RealmObject{
 
     public void setSaved(boolean saved) {
         isSaved = saved;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

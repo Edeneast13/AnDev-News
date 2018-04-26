@@ -1,12 +1,12 @@
 package com.brianroper.andevweekly.volume;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.brianroper.andevweekly.R;
@@ -38,35 +38,34 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View root = inflater.inflate(R.layout.volume_item, parent, false);
         final VolumeViewHolder volumeViewHolder = new VolumeViewHolder(root);
-
-        root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setVolumeListener(volumeViewHolder);
-            }
-        });
-
-        setVolumeAddListener(volumeViewHolder);
-
         return volumeViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(VolumeViewHolder holder, int position) {
+    public void onBindViewHolder(VolumeViewHolder holder, final int position) {
         holder.mVolumeHeadline.setText(mRealmResults.get(position).getHeadline());
         holder.mVolumeSummary.setText(mRealmResults.get(position).getSummary()
                 + " " + mRealmResults.get(position).getSource());
-        if(mRealmResults.get(position).getSaved()){
-           // holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_check));
-        }
-        else{
-           // holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_add));
-        }
+
+        holder.mVolumeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                saveArticle(position);
+                return true;
+            }
+        });
+
+        holder.mVolumeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openArticleWebView(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return mRealmResults.size();
+        return mRealmResults == null ? 0 : mRealmResults.size();
     }
 
     public class VolumeViewHolder extends RecyclerView.ViewHolder{
@@ -74,6 +73,8 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         public TextView mVolumeHeadline;
         @BindView(R.id.volume_summary)
         public TextView mVolumeSummary;
+        @BindView(R.id.volume_item)
+        public ConstraintLayout mVolumeLayout;
 
         public VolumeViewHolder(View itemView) {
             super(itemView);
@@ -83,6 +84,8 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
 
     /**
      * retrieves volume data from realm database
+     * @param issue
+     * @return realm results containing volumes
      */
     public RealmResults<Volume> getVolumeDataFromRealm(int issue){
         Realm realm;
@@ -97,57 +100,54 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     }
 
     /**
-     * handles click behavior for recycler view item
+     * opens article in  a webview using object url
+     * @param position
      */
-    public void setVolumeListener(VolumeViewHolder holder){
+    private void openArticleWebView(int position){
         if(Util.activeNetworkCheck(mContext)){
-            int position = holder.getAdapterPosition();
             new FinestWebView.Builder(mContext).show(mRealmResults.get(position).getLink());
         }
         else{Util.noActiveNetworkToast(mContext);}
     }
 
-    public void setVolumeAddListener(final VolumeViewHolder holder){
-//        holder.mVolumeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final int position = holder.getAdapterPosition();
-//                Realm realm;
-//                Realm.init(mContext);
-//                RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-//                        .deleteRealmIfMigrationNeeded()
-//                        .build();
-//                realm = Realm.getInstance(realmConfiguration);
-//                realm.executeTransaction(new Realm.Transaction() {
-//                    @Override
-//                    public void execute(Realm realm) {
-//                        if(mRealmResults.get(position).getSaved()){
-//                            realm.where(Favorite.class)
-//                                    .equalTo("id", mRealmResults.get(position).getId())
-//                                    .findFirst()
-//                                    .deleteFromRealm();
-//                            Volume volume = mRealmResults.get(position);
-//                            volume.setSaved(false);
-//                            realm.copyToRealmOrUpdate(volume);
-//                        }
-//                        else {
-//                            Favorite favorite = realm
-//                                    .createObject(Favorite.class, mRealmResults.get(position).getId());
-//                            favorite.setIssue(mRealmResults.get(position).getIssue());
-//                            favorite.setLink(mRealmResults.get(position).getLink());
-//                            favorite.setSummary(mRealmResults.get(position).getSummary());
-//                            favorite.setHeadline(mRealmResults.get(position).getHeadline());
-//                            favorite.setSource(mRealmResults.get(position).getSource());
-//                            Volume volume = mRealmResults.get(position);
-//                            volume.setSaved(true);
-//                            realm.copyToRealmOrUpdate(volume);
-//                        }
-//                    }
-//                });
-//                realm.close();
-//                holder.mVolumeButton.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.ic_check));
-//                notifyDataSetChanged();
-//            }
-//        });
+    /**
+     * saves the article in realm database of favorites
+     * @param position
+     */
+    private void saveArticle(final int position){
+        Realm realm;
+        Realm.init(mContext);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfiguration);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if(mRealmResults.get(position).getSaved()){
+                    realm.where(Favorite.class)
+                            .equalTo("id", mRealmResults.get(position).getId())
+                            .findFirst()
+                            .deleteFromRealm();
+                    Volume volume = mRealmResults.get(position);
+                    volume.setSaved(false);
+                    realm.copyToRealmOrUpdate(volume);
+                }
+                else {
+                    Favorite favorite = realm
+                            .createObject(Favorite.class, mRealmResults.get(position).getId());
+                    favorite.setIssue(mRealmResults.get(position).getIssue());
+                    favorite.setLink(mRealmResults.get(position).getLink());
+                    favorite.setSummary(mRealmResults.get(position).getSummary());
+                    favorite.setHeadline(mRealmResults.get(position).getHeadline());
+                    favorite.setSource(mRealmResults.get(position).getSource());
+                    Volume volume = mRealmResults.get(position);
+                    volume.setSaved(true);
+                    realm.copyToRealmOrUpdate(volume);
+                }
+            }
+        });
+        realm.close();
+        notifyDataSetChanged();
     }
 }
