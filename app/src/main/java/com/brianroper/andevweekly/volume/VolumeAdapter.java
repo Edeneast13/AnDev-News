@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brianroper.andevweekly.R;
 import com.brianroper.andevweekly.favorites.Favorite;
@@ -50,6 +51,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
             @Override
             public boolean onLongClick(View v) {
                 //TODO: add dialog asking user to confirm save
+                Toast.makeText(mContext, "Saved to Favorites", Toast.LENGTH_LONG).show();
                 saveArticle(position);
                 return true;
             }
