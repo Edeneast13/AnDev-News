@@ -1,10 +1,14 @@
 package com.brianroper.andevweekly.home
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import com.brianroper.andevweekly.R
+import com.brianroper.andevweekly.about.AboutActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -29,11 +33,24 @@ class HomeActivity : AppCompatActivity() {
         return homeItems
     }
 
-    /**
-     * handles toolbar behavior
-     */
-    fun handleToolbarBehavior(toolbar: Toolbar) {
+    private fun handleToolbarBehavior(toolbar: Toolbar) {
         setSupportActionBar(toolbar)
-        supportActionBar!!.setLogo(R.drawable.logo)
+        supportActionBar!!.setLogo(R.drawable.toolbarlogo)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.about -> {
+                val aboutIntent = Intent(this, AboutActivity::class.java)
+                startActivity(aboutIntent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
