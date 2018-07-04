@@ -44,7 +44,7 @@ public class ArchiveActivity extends AppCompatActivity {
      */
     public void handleToolbarBehavior(Toolbar toolbar){
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.toolbarlogo);
+        getSupportActionBar().setTitle("Android Weekly");
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

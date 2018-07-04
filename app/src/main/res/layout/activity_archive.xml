@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.brianroper.andevweekly.archive.ArchiveActivity"
-    android:background="@color/baseBackground" xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/baseBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/archive_toolbar"
@@ -21,7 +22,6 @@
         android:layout_above="@+id/bottom_navigation_view"
         android:animateLayoutChanges="true"
         android:id="@+id/frame_layout">
-
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -31,7 +31,6 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         app:menu="@menu/bottom_navigation_view">
-
     </android.support.design.widget.BottomNavigationView>
 
 </RelativeLayout>

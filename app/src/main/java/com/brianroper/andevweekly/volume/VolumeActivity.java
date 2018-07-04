@@ -1,13 +1,11 @@
 package com.brianroper.andevweekly.volume;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.brianroper.andevweekly.R;
-import com.brianroper.andevweekly.volume.VolumeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

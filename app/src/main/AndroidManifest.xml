@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <activity android:name=".archive.ArchiveActivity"/>
+        <activity
+            android:name=".archive.ArchiveActivity"
+            android:theme="@style/WeeklyMaterial"/>
 
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
@@ -25,11 +27,13 @@
 
         <activity
             android:name=".volume.VolumeActivity"
-            android:parentActivityName=".archive.ArchiveActivity"/>
+            android:parentActivityName=".archive.ArchiveActivity"
+            android:theme="@style/WeeklyMaterial"/>
 
         <activity android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -39,6 +43,10 @@
             android:parentActivityName=".archive.ArchiveActivity"
             android:theme="@style/AboutMaterial"/>
 
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/WeeklyMaterial">
+        </activity>
     </application>
 
 </manifest>

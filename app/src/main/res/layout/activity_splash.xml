@@ -10,12 +10,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.brianroper.andevweekly.splash.SplashActivity"
-    android:background="#FFFFFF">
+    android:background="@color/baseBackground">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash_background"
-        android:layout_centerInParent="true"/>
+        android:src="@drawable/frame_andevnews"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"/>
 
 </RelativeLayout>
