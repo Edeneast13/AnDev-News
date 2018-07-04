@@ -14,7 +14,8 @@
 
         <activity
             android:name=".archive.ArchiveActivity"
-            android:theme="@style/WeeklyMaterial"/>
+            android:theme="@style/WeeklyMaterial"
+            android:parentActivityName=".home.HomeActivity"/>
 
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
@@ -39,7 +40,7 @@
 
         <activity
             android:name=".about.AboutActivity"
-            android:parentActivityName=".archive.ArchiveActivity"
+            android:parentActivityName=".home.HomeActivity"
             android:theme="@style/AboutMaterial"/>
 
         <activity

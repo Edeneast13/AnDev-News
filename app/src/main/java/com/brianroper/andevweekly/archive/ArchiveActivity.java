@@ -45,32 +45,8 @@ public class ArchiveActivity extends AppCompatActivity {
     public void handleToolbarBehavior(Toolbar toolbar){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Android Weekly");
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHomePage();
-            }
-        });
-    }
-
-    @Override
-    public void onBackPressed() {}
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.about :
-                Intent aboutIntent = new Intent(this, AboutActivity.class);
-                startActivity(aboutIntent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     /**
