@@ -1,4 +1,4 @@
-package com.brianroper.andevweekly
+package com.brianroper.andevweekly.home
 
 import android.graphics.drawable.Drawable
 

@@ -1,10 +1,11 @@
-package com.brianroper.andevweekly
+package com.brianroper.andevweekly.home
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.brianroper.andevweekly.R
 import kotlinx.android.synthetic.main.home_item.view.*
 
 class HomeScreenAdapter(val items : ArrayList<HomeItem>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
@@ -15,7 +16,7 @@ class HomeScreenAdapter(val items : ArrayList<HomeItem>, val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder?.itemTitle?.text = items.get(position).title
-        holder?.itemImage.setImageDrawable(items.get(position).imageResource)
+        holder?.itemImage.setImageResource(items.get(position).imageResource)
     }
 
     override fun getItemCount(): Int {

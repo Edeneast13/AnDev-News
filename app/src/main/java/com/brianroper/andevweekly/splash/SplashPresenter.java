@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.brianroper.andevweekly.archive.ArchiveService;
 import com.brianroper.andevweekly.base.Presenter;
+import com.brianroper.andevweekly.home.HomeActivity;
 import com.brianroper.andevweekly.utils.Util;
 import com.brianroper.andevweekly.archive.ArchiveActivity;
 
@@ -50,7 +51,7 @@ public class SplashPresenter implements Presenter<SplashView> {
      * starts the ArchiveService
      */
     public void startArchiveService(){
-        if(Util.activeNetworkCheck(mContext)==true) {
+        if(Util.activeNetworkCheck(mContext)) {
             Intent archiveService = new Intent(mContext, ArchiveService.class);
             mContext.startService(archiveService);
         }
@@ -62,6 +63,12 @@ public class SplashPresenter implements Presenter<SplashView> {
      */
     public void startArchiveActivity(){
         Intent archiveIntent = new Intent(mContext, ArchiveActivity.class);
+        archiveIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(archiveIntent);
+    }
+
+    public void startHomeActivity(){
+        Intent archiveIntent = new Intent(mContext, HomeActivity.class);
         archiveIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(archiveIntent);
     }

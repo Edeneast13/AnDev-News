@@ -33,7 +33,8 @@ public class SplashActivity extends AppCompatActivity implements SplashView {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSplashPresenter.startArchiveActivity();
+               // mSplashPresenter.startArchiveActivity();
+                mSplashPresenter.startHomeActivity();
             }
         }, SPLASH_DURATION);
     }
