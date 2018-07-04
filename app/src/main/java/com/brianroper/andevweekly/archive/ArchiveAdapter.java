@@ -30,7 +30,7 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
     private Context mContext;
     private RealmResults<Archive> mRealmResults;
 
-    public ArchiveAdapter(Context context) {
+    ArchiveAdapter(Context context) {
         mContext = context;
     }
 
@@ -70,7 +70,7 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
         @BindView(R.id.archive_date)
         public TextView mArchiveDateTextView;
 
-        public ArchiveViewHolder(View itemView) {
+        ArchiveViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -92,8 +92,8 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
     /**
      * handles click behavior for recycler view item
      */
-    public void setArchiveListener(ArchiveViewHolder holder){
-        if(Util.activeNetworkCheck(mContext)==true){
+    private void setArchiveListener(ArchiveViewHolder holder){
+        if(Util.activeNetworkCheck(mContext)){
             if(holder.getAdapterPosition()>=104){
                 Intent volumeIntent = new Intent(mContext, VolumeActivity.class);
                 volumeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -30,7 +30,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
     private Context mContext;
     private RealmResults<Volume> mRealmResults;
 
-    public VolumeAdapter(Context context) {
+    VolumeAdapter(Context context) {
         mContext = context;
     }
 
@@ -78,7 +78,7 @@ public class VolumeAdapter extends RecyclerView.Adapter<VolumeAdapter.VolumeView
         @BindView(R.id.volume_item)
         public ConstraintLayout mVolumeLayout;
 
-        public VolumeViewHolder(View itemView) {
+        VolumeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

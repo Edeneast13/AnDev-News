@@ -28,7 +28,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     private Context mContext;
     private RealmResults<Favorite> mRealmResults;
 
-    public FavoriteAdapter(Context context) {
+    FavoriteAdapter(Context context) {
         mContext = context;
     }
 
