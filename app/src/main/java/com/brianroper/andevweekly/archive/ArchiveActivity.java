@@ -1,6 +1,5 @@
 package com.brianroper.andevweekly.archive;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -9,12 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
-import android.view.View;
 
 import com.brianroper.andevweekly.R;
 import com.brianroper.andevweekly.model.Constants;
 import com.brianroper.andevweekly.utils.Util;
-import com.brianroper.andevweekly.about.AboutActivity;
 import com.brianroper.andevweekly.favorites.FavoriteFragment;
 import com.thefinestartist.finestwebview.FinestWebView;
 

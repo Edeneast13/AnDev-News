@@ -18,7 +18,6 @@ public class AboutActivity extends MaterialAboutActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     /**
@@ -41,7 +40,7 @@ public class AboutActivity extends MaterialAboutActivity {
         MaterialAboutCard.Builder devCard = new MaterialAboutCard.Builder();
         devCard.title("Author");
         devCard.addItem(new MaterialAboutActionItem.Builder()
-                .text("Brian Roper")
+                .text("LI Code Lab")
                 .subText("United States")
                 .icon(R.mipmap.ic_person_black_24dp)
                 .build());
